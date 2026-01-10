@@ -17,12 +17,13 @@ allprojects {
     apply(plugin = "java-library")
     apply(plugin = "kotlin")
     apply(plugin = "maven-publish")
-}
-
-subprojects {
+    
     repositories {
         mavenCentral()
     }
+}
+
+subprojects {
     
     java {
         toolchain {

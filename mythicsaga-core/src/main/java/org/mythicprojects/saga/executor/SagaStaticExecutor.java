@@ -4,7 +4,7 @@ import java.util.concurrent.Executor;
 import org.jetbrains.annotations.NotNull;
 
 final class SagaStaticExecutor extends SagaExecutorBase {
-    
+
     private final Executor executor;
 
     SagaStaticExecutor(Executor executor) {
@@ -12,7 +12,8 @@ final class SagaStaticExecutor extends SagaExecutorBase {
     }
 
     @Override
-    protected @NotNull Executor getExecutor() {
-        return this.executor;
+    protected void execute(@NotNull Runnable runnable) {
+        this.executor.execute(runnable);
     }
+
 }

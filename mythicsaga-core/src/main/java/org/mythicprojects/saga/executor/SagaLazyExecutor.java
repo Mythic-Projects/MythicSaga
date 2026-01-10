@@ -13,8 +13,9 @@ final class SagaLazyExecutor extends SagaExecutorBase {
     }
 
     @Override
-    protected @NotNull Executor getExecutor() {
-        return this.executorSupplier.get();
+    protected void execute(@NotNull Runnable runnable) {
+        Executor executor = this.executorSupplier.get();
+        executor.execute(runnable);
     }
-    
+
 }

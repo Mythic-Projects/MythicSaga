@@ -2,7 +2,6 @@ package org.mythicprojects.saga.executor;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
-import java.util.concurrent.Executor;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -14,7 +13,7 @@ import org.mythicprojects.saga.function.SagaSupplier;
 
 public abstract class SagaExecutorBase implements SagaExecutor {
 
-    protected abstract @NotNull Executor getExecutor();
+    protected abstract void execute(@NotNull Runnable runnable);
 
     @Override
     public @NotNull SagaRunnable wrap(@NotNull Runnable runnable) {
@@ -64,7 +63,7 @@ public abstract class SagaExecutorBase implements SagaExecutor {
 
     private <T> T executeAndGet(@NotNull SagaSupplier<? extends T> action) throws Throwable {
         CompletableFuture<T> future = new CompletableFuture<>();
-        this.getExecutor().execute(() -> {
+        this.execute(() -> {
             try {
                 T result = action.get();
                 future.complete(result);

@@ -25,7 +25,7 @@ final class SagaTransactionExecutionImpl implements SagaTransactionExecution {
             }
         };
     }
-    
+
     void addRollbackHandler(@NotNull SagaRunnable handler) {
         this.rollbackHandlers.push(handler);
     }
@@ -35,11 +35,12 @@ final class SagaTransactionExecutionImpl implements SagaTransactionExecution {
     }
 
     void rollback(@NotNull Throwable primaryException) {
-        for (SagaRunnable handler : this.rollbackHandlers) {
+        while (!this.rollbackHandlers.isEmpty()) {
+            SagaRunnable handler = this.rollbackHandlers.pop();
             try {
                 handler.run();
-            } catch (Throwable rollbackException) {
-                primaryException.addSuppressed(rollbackException);
+            } catch (Throwable ex) {
+                primaryException.addSuppressed(ex);
             }
         }
     }

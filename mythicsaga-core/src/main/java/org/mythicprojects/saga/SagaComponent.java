@@ -11,7 +11,7 @@ public interface SagaComponent<T, C extends SagaComponent<T, C>> {
     
     @NotNull ComponentType type();
     
-    @NotNull String id();
+    @NotNull String name();
     
     @Contract("_ -> this")
     C onRollback(@NotNull SagaRunnable rollbackHandler);

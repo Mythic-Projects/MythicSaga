@@ -13,10 +13,10 @@ final class SagaTransactionExecutionImpl implements SagaTransactionExecution {
 
     @Override
     public <S> @NotNull SagaStep<S> createStep(
-            @NotNull String id,
+            @NotNull String name,
             @NotNull SagaSupplier<S> supplier
     ) {
-        return new SagaStepBuilder<>(id, supplier) {
+        return new SagaStepBuilder<>(name, supplier) {
             @Override
             S internalExecute() throws Throwable {
                 S result = super.internalExecute();

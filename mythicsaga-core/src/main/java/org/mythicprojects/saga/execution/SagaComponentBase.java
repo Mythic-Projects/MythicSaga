@@ -9,17 +9,17 @@ import org.mythicprojects.saga.function.SagaRunnable;
 
 abstract class SagaComponentBase<T, C extends SagaComponent<T, C>> implements SagaComponent<T, C> {
 
-    private final String id;
+    private final String name;
 
     private SagaRunnable rollbackHandler;
 
-    SagaComponentBase(@NotNull String id) {
-        this.id = id;
+    SagaComponentBase(@NotNull String name) {
+        this.name = name;
     }
 
     @Override
-    public @NotNull String id() {
-        return this.id;
+    public @NotNull String name() {
+        return this.name;
     }
 
     @Override
@@ -65,7 +65,7 @@ abstract class SagaComponentBase<T, C extends SagaComponent<T, C>> implements Sa
 
     @Override
     public String toString() {
-        return "Saga " + this.type() + " [ID: " + this.id() + "]";
+        return "Saga " + this.type() + " [Name: " + this.name() + "]";
     }
 
 }

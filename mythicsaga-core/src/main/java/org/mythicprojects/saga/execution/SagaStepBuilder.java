@@ -10,10 +10,10 @@ class SagaStepBuilder<T> extends SagaComponentBase<T, SagaStep<T>> implements Sa
     private final @NotNull SagaSupplier<? extends T> supplier;
 
     SagaStepBuilder(
-            @NotNull String id,
+            @NotNull String name,
             @NotNull SagaSupplier<? extends T> supplier
     ) {
-        super(id);
+        super(name);
         this.supplier = supplier;
     }
 

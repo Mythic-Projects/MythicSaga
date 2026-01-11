@@ -10,10 +10,10 @@ public final class SagaTransactionBuilder<T> extends SagaComponentBase<T, SagaTr
     private final SagaFunction<? super SagaTransactionExecution, ? extends T> execution;
 
     public SagaTransactionBuilder(
-            @NotNull String id,
+            @NotNull String name,
             SagaFunction<? super SagaTransactionExecution, ? extends T> execution
     ) {
-        super(id);
+        super(name);
         this.execution = execution;
     }
 

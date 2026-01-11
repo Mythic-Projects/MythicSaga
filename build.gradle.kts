@@ -21,31 +21,7 @@ allprojects {
     repositories {
         mavenCentral()
     }
-}
-
-subprojects {
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(21)
-        }
-
-        withSourcesJar()
-        withJavadocJar()
-    }
-
-    tasks.withType<JavaCompile> {
-        options.encoding = "UTF-8"
-    }
-
-    tasks.withType<Javadoc> {
-        options {
-            (this as CoreJavadocOptions).addStringOption(
-                "Xdoclint:none",
-                "-quiet"
-            ) // mute warnings
-        }
-    }
-
+    
     publishing {
         publications {
             create<MavenPublication>("libraries") {
@@ -79,25 +55,6 @@ subprojects {
                         }
                     }
                 }
-
-                // Add external repositories to published artifacts
-                // ~ btw: pls don't touch this
-                pom.withXml {
-                    val repositories = asNode().appendNode("repositories")
-
-                    project.repositories.forEach { repo ->
-                        if (repo is UrlArtifactRepository && repo.url.toString().startsWith("http")) {
-                            val repository = repositories.appendNode("repository")
-                            val repoId = repo.url.toString()
-                                .replace("https://", "")
-                                .replace("/", "-")
-                                .replace(".", "-")
-                                .trim()
-                            repository.appendNode("id", repoId)
-                            repository.appendNode("url", repo.url.toString())
-                        }
-                    }
-                }
             }
         }
 
@@ -112,6 +69,30 @@ subprojects {
                     create<BasicAuthentication>("basic")
                 }
             }
+        }
+    }
+}
+
+subprojects {
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+
+        withSourcesJar()
+        withJavadocJar()
+    }
+
+    tasks.withType<JavaCompile> {
+        options.encoding = "UTF-8"
+    }
+
+    tasks.withType<Javadoc> {
+        options {
+            (this as CoreJavadocOptions).addStringOption(
+                "Xdoclint:none",
+                "-quiet"
+            ) // mute warnings
         }
     }
 }
